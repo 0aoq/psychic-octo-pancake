@@ -1,10 +1,5 @@
 local RunService = game:GetService("RunService")
 
-if RunService:IsClient() then -- this module being in replicatedstorage is a trick
-	local Player = game:GetService("Players").LocalPlayer
-	Player:Kick("You cannot call the levels module from the client, possible exploiting detected.")
-end
-
 local DataStoreService = game:GetService("DataStoreService")
 local Http = game:GetService("HttpService")
 
