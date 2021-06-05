@@ -31,7 +31,7 @@ game.ReplicatedStorage.LevelRemote.OnClientEvent:Connect(function(args)
 	end
 end)
 ```
-EXP is added with the function `addEXP` which can take up to 4 arguments.
+EXP is added with the function `AddEXP` which can take up to 4 arguments.
 ```lua
 module.AddEXP(Player, {
   isMonster = true, -- if the exp adding is coming from a monster kill
@@ -82,7 +82,7 @@ PathFinding.Path(agent: instance, position: Vector3, plot: boolean)
 
 ## Demos
 
-### addEXP
+### AddEXP
 
 [This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/exp_giving_demo_enemy%20lol%20(lvl.21).rbxm) shows an example of adding exp to a user when they touch a part. <br>
 The code is the same method as mentioned in the example in the [levels](https://github.com/0aoq/psychic-octo-pancake#levels) module.
