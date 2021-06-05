@@ -69,7 +69,7 @@ end)
 
 ### Pathfinding
 
-The pathfinding module is used by the NPC in [addEXP](https://github.com/0aoq/psychic-octo-pancake#addexp) demo.
+The pathfinding module is used by the NPC in [AddEXP](https://github.com/0aoq/psychic-octo-pancake#addexp) demo.
 This module used the PathfindingService to path a route for a agent to follow to the set destination.
 
 The `Path` function takes 3 arguments.
