@@ -70,6 +70,8 @@ function module.cache(Player, value, default)
 	return val
 end
 
+-- Level Utilities
+
 function module.Advance(Player)
 	if RunService:IsServer() then
 		local level = Player:FindFirstChild("level")
@@ -80,6 +82,18 @@ function module.Advance(Player)
 		exp_needed.Value = module.getEXPToNextLevel(level.Value)
 		exp.Value = 0
 	end
+end
+
+function module.getLevel(Player)
+	return Player:WaitForChild("level").Value
+end
+
+function module.getEXP(Player)
+	return Player:WaitForChild("exp").Value
+end
+
+function module.getNeededEXP(Player)
+	return Player:WaitForChild("exp_needed").Value
 end
 
 -- Level EXP
