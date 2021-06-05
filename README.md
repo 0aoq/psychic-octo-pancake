@@ -106,3 +106,9 @@ end
 ### CharacterPos
 
 [This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/CharacterPos.lua) shows how to create a character location saving system using the [PlayerData](https://github.com/0aoq/psychic-octo-pancake/blob/main/ServerScriptService/modules/PlayerData.lua) module. Whenever a player leaves the server their location is saved, once they rejoin they'll be teleported back to this location.
+
+### Saving Data
+
+A simple demo guide on how to properly save data with the [DataCache](https://github.com/0aoq/psychic-octo-pancake/blob/main/ReplicatedStorage/modules/DataCache.lua) module.
+
+- [Open demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/SavingData.md)
