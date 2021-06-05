@@ -67,6 +67,15 @@ end)
 - https://www.roblox.com/library/6910069881/KeybindModule <br>
 - [ReplicatedStorage/modules/KeybindModule.lua](https://github.com/0aoq/psychic-octo-pancake/blob/main/ReplicatedStorage/modules/KeybindModule.lua)
 
+### Pathfinding
+
+The pathfinding module is used by the NPC in [addEXP](https://github.com/0aoq/psychic-octo-pancake#addexp) demo.
+This module used the PathfindingService to path a route for a agent to follow to the set destination.
+
+The `Path` function takes 3 arguments.
+```lua
+PathFinding.Path(agent: instance, position: Vector3, plot: boolean)
+```
 
 ## Demos
 
