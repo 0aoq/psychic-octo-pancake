@@ -4,6 +4,7 @@ local DataStoreService = game:GetService("DataStoreService")
 local Http = game:GetService("HttpService")
 
 local Levels = DataStoreService:GetDataStore("PlayerLevels")
+local cache = require(game.ReplicatedStorage.modules.DataCache)
 
 local module = {}
 
@@ -15,10 +16,27 @@ function module.init()
 			if Levels:GetAsync("User__" .. Player.UserId) then
 				-- we need to store data inside of values and save on exit, instead of saving on change
 
-				local level = module.cache(Player, "level", 1)
-				local exp_needed = module.cache(Player, "exp_needed", module.getEXPToNextLevel(level.Value))
-				local exp = module.cache(Player, "exp", 0)
-
+				local level = cache(Player, {
+					name = "level",
+					value = Http:JSONDecode(Levels:GetAsync("User__" .. Player.UserId)).level,
+					default = 1,
+					__type = "Number"
+				})
+				
+				local exp_needed = cache(Player, {
+					name = "exp_needed",
+					value = Http:JSONDecode(Levels:GetAsync("User__" .. Player.UserId)).exp_needed,
+					default = 100,
+					__type = "Number"
+				})
+				
+				local exp = cache(Player, {
+					name = "exp",
+					value = Http:JSONDecode(Levels:GetAsync("User__" .. Player.UserId)).exp,
+					default = 0,
+					__type = "Number"
+				})
+				
 				delay(0.5, function()
 					game.ReplicatedStorage.LevelRemote:FireClient(Player, {
 						request = "UpdateText",
@@ -48,9 +66,10 @@ function module.init()
 end
 
 local function writeData(PLAYER)
-	local exp_needed = PLAYER:FindFirstChild("exp_needed")
-	local level = PLAYER:FindFirstChild("level")
-	local exp = PLAYER:FindFirstChild("exp")
+	local cache = PLAYER:FindFirstChild(".cache")
+	local exp_needed = cache:FindFirstChild("exp_needed")
+	local level = cache:FindFirstChild("level")
+	local exp = cache:FindFirstChild("exp")
 
 	local playerLevel = Http:JSONDecode(Levels:GetAsync("User__" .. PLAYER.UserId))
 
@@ -73,21 +92,22 @@ game:GetService("Players").PlayerRemoving:Connect(function(PLAYER)
 	writeData(PLAYER)
 end)
 
-function module.cache(Player, value, default)
+--[[function module.cache(Player, value, default)
 	local val = Instance.new("NumberValue", Player)
 	val.Name = value
 	val.Value = Http:JSONDecode(Levels:GetAsync("User__" .. Player.UserId))[value] or default
 
 	return val
-end
+end]]
 
 -- Level Utilities
 
 function module.Advance(Player)
 	if RunService:IsServer() then
-		local level = Player:FindFirstChild("level")
-		local exp_needed = Player:FindFirstChild("exp_needed")
-		local exp = Player:FindFirstChild("exp")
+		local cache = Player:FindFirstChild(".cache")
+		local exp_needed = cache:FindFirstChild("exp_needed")
+		local level = cache:FindFirstChild("level")
+		local exp = cache:FindFirstChild("exp")
 
 		level.Value = level.Value + 1
 		exp_needed.Value = module.getEXPToNextLevel(level.Value)
