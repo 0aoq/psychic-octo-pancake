@@ -109,6 +109,4 @@ end
 
 ### Saving Data
 
-A simple demo guide on how to properly save data with the [DataCache](https://github.com/0aoq/psychic-octo-pancake/blob/main/ReplicatedStorage/modules/DataCache.lua) module.
-
-- [Open demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/SavingData.md)
+[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/Guides/SavingData.md) is a simple demo guide on how to properly save data with the [DataCache](https://github.com/0aoq/psychic-octo-pancake/blob/main/ReplicatedStorage/modules/DataCache.lua) module.
