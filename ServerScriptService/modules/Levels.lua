@@ -47,17 +47,17 @@ function module.init()
 	end
 end
 
-game:GetService("Players").PlayerRemoving:Connect(function(PLAYER)
+local function writeData(PLAYER)
 	local exp_needed = PLAYER:FindFirstChild("exp_needed")
 	local level = PLAYER:FindFirstChild("level")
 	local exp = PLAYER:FindFirstChild("exp")
-	
+
 	local playerLevel = Http:JSONDecode(Levels:GetAsync("User__" .. PLAYER.UserId))
 
 	playerLevel.exp_needed = exp_needed.Value
 	playerLevel.level = level.Value
 	playerLevel.exp = exp.Value
-		
+
 	local success, err = pcall(function()
 		Levels:SetAsync("User__" .. PLAYER.UserId, Http:JSONEncode(playerLevel))
 	end)
@@ -67,6 +67,10 @@ game:GetService("Players").PlayerRemoving:Connect(function(PLAYER)
 	elseif success then
 		print("Player level updated.")
 	end
+end
+
+game:GetService("Players").PlayerRemoving:Connect(function(PLAYER)
+	writeData(PLAYER)
 end)
 
 function module.cache(Player, value, default)
@@ -95,6 +99,8 @@ function module.Advance(Player)
 			__exp_needed = exp_needed.Value,
 			__exp = exp.Value
 		})
+		
+		writeData(Player)
 	end
 end
 
