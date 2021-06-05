@@ -19,12 +19,14 @@ function module.init()
 				local exp_needed = module.cache(Player, "exp_needed", module.getEXPToNextLevel(level.Value))
 				local exp = module.cache(Player, "exp", 0)
 				
-				game.ReplicatedStorage.LevelRemote:FireClient(Player, {
-					request = "UpdateText",
-					__level = level.Value,
-					__exp_needed = exp_needed.Value,
-					__exp = exp.Value
-				})
+				delay(0.5, function()
+					game.ReplicatedStorage.LevelRemote:FireClient(Player, {
+						request = "UpdateText",
+						__level = level.Value,
+						__exp_needed = exp_needed.Value,
+						__exp = exp.Value
+					})
+				end)
 			else
 				Levels:SetAsync("User__" .. Player.UserId, Http:JSONEncode(
 					{
