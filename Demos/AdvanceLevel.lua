@@ -1,5 +1,5 @@
 local debounce = false
-local module = require(game.ReplicatedStorage.modules.Levels)
+local module = require(game.ServerScriptService.modules.Levels)
 
 script.Parent.Touched:Connect(function(Part)
 	if Part.Parent:FindFirstChild("Humanoid") then
