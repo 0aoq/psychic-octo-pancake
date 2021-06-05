@@ -73,7 +73,7 @@ end)
 ### addEXP
 
 [This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/exp_giving_demo_enemy%20lol%20(lvl.21).rbxm) shows an example of adding exp to a user when they touch a part. <br>
-The code is the same method as mentioned as the example in the [levels](https://github.com/0aoq/psychic-octo-pancake#levels) module.
+The code is the same method as mentioned in the example in the [levels](https://github.com/0aoq/psychic-octo-pancake#levels) module.
 
 This demo examples how to add EXP to player after they kill an NPC. The EXP is awarded to the player who does the most damage. <br>
 EXP will be added when the health of the NPC reaches 0 or less.
