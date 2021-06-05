@@ -2,7 +2,7 @@
 Roblox modules.
 
 ## Script Overview
-This doesn't include every script.
+This doesn't include every script. The scripts listed are not in any order.
 
 ### Levels
 
