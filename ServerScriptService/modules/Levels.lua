@@ -135,10 +135,11 @@ function module.AddEXP(Player, args)
 		else
 			value = math.floor(module.getQuestEXPFromLevel(1) + 0.5)
 		end
-
-		local level = Player:FindFirstChild("level")
-		local exp_needed = Player:FindFirstChild("exp_needed")
-		local exp = Player:FindFirstChild("exp")
+		
+		local cache = Player:FindFirstChild(".cache")
+		local level = cache:FindFirstChild("level")
+		local exp_needed = cache:FindFirstChild("exp_needed")
+		local exp = cache:FindFirstChild("exp")
 
 		exp.Value = exp.Value + value
 
