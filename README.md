@@ -77,6 +77,4 @@ The code is the same method as mentioned as the example in the [levels](https://
 
 ### CharacterPos
 
-[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/CharacterPos.lua) shows how to create a character location saving system using the [PlayerData](https://github.com/0aoq/psychic-octo-pancake/blob/main/ServerScriptService/modules/PlayerData.lua) module.
-
-Whenever a player leaves the server their location is saved, once they rejoin they'll be teleported back to this location.
+[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/CharacterPos.lua) shows how to create a character location saving system using the [PlayerData](https://github.com/0aoq/psychic-octo-pancake/blob/main/ServerScriptService/modules/PlayerData.lua) module. Whenever a player leaves the server their location is saved, once they rejoin they'll be teleported back to this location.
