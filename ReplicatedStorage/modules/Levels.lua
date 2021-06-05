@@ -1,6 +1,12 @@
+local RunService = game:GetService("RunService")
+
+if RunService:IsClient() then -- this module being in replicatedstorage is a trick
+	local Player = game:GetService("Players").LocalPlayer
+	Player:Kick("You cannot call the levels module from the client, possible exploiting detected.")
+end
+
 local DataStoreService = game:GetService("DataStoreService")
 local Http = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
 
 local Levels = DataStoreService:GetDataStore("PlayerLevels")
 
@@ -79,11 +85,6 @@ function module.Advance(Player)
 		exp_needed.Value = module.getEXPToNextLevel(level.Value)
 		exp.Value = 0
 	end
-end
-
-if RunService:IsClient() then
-	local Player = game:GetService("Players").LocalPlayer
-	Player:Kick()
 end
 
 -- Level EXP
