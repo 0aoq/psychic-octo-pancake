@@ -18,7 +18,7 @@ function module.init()
 				local level = module.cache(Player, "level", 1)
 				local exp_needed = module.cache(Player, "exp_needed", module.getEXPToNextLevel(level.Value))
 				local exp = module.cache(Player, "exp", 0)
-				
+
 				delay(0.5, function()
 					game.ReplicatedStorage.LevelRemote:FireClient(Player, {
 						request = "UpdateText",
@@ -28,14 +28,12 @@ function module.init()
 					})
 				end)
 			else
-				Levels:SetAsync("User__" .. Player.UserId, Http:JSONEncode(
-					{
-						level = 1,
-						exp_needed = module.getEXPToNextLevel(1),
-						exp = 0
-					}
-					))
-				util(Player) -- rerun now that the player has the datastore entry
+				Levels:SetAsync("User__" .. Player.UserId, Http:JSONEncode({
+					level = 1,
+					exp_needed = module.getEXPToNextLevel(1),
+					exp = 0
+				}))
+				util(Player) -- rerun now that the player has a datastore entry
 			end
 		end
 
@@ -94,14 +92,14 @@ function module.Advance(Player)
 		level.Value = level.Value + 1
 		exp_needed.Value = module.getEXPToNextLevel(level.Value)
 		exp.Value = 0
-		
+
 		game.ReplicatedStorage.LevelRemote:FireClient(Player, {
 			request = "UpdateText",
 			__level = level.Value,
 			__exp_needed = exp_needed.Value,
 			__exp = exp.Value
 		})
-		
+
 		writeData(Player)
 	end
 end
@@ -109,7 +107,7 @@ end
 function module.AddEXP(Player, args)
 	if RunService:IsServer() then
 		local value = 100
-		
+
 		if args.isMonster then
 			value = math.floor(module.getMonsterEXPFromLevel(args.monsterLevel) + 0.5)
 		elseif args.isQuest then
@@ -117,20 +115,20 @@ function module.AddEXP(Player, args)
 		else
 			value = math.floor(module.getQuestEXPFromLevel(1) + 0.5)
 		end
-		
+
 		local level = Player:FindFirstChild("level")
 		local exp_needed = Player:FindFirstChild("exp_needed")
 		local exp = Player:FindFirstChild("exp")
 
 		exp.Value = exp.Value + value
-		
+
 		game.ReplicatedStorage.LevelRemote:FireClient(Player, {
 			request = "UpdateText",
 			__level = level.Value,
 			__exp_needed = exp_needed.Value,
 			__exp = exp.Value
 		})
-		
+
 		if exp.Value >= exp_needed.Value then
 			module.Advance(Player)
 		end
