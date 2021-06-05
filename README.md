@@ -77,6 +77,9 @@ The `Path` function takes 3 arguments.
 PathFinding.Path(agent: instance, position: Vector3, plot: boolean)
 ```
 
+- https://www.roblox.com/library/6910073679/Pathfinding
+- [ServerScriptService/modules/Pathfinding.lua](https://github.com/0aoq/psychic-octo-pancake/blob/main/ServerScriptService/modules/Pathfinding.lua)
+
 ## Demos
 
 ### addEXP
