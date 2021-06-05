@@ -10,7 +10,7 @@ function module.Path(agent, ending, plot)
 	local RootPart = agent.HumanoidRootPart
 
 	local Path = PathFinding:CreatePath()
-	Path:ComputeAsync(RootPart.Position, ending.Position)
+	Path:ComputeAsync(RootPart.Position, ending)
 	local waypoints = Path:GetWaypoints()
 
 	for i, waypoint in pairs(waypoints) do
@@ -31,7 +31,14 @@ function module.Path(agent, ending, plot)
 		end
 
 		Humanoid:MoveTo(waypoint.Position)
-		Humanoid.MoveToFinished:Wait(1)
+		
+		if Path.Status ~= Enum.PathStatus.Success then
+			Humanoid:Move(Vector3.new(math.random(-1, 1), 0, math.random(-1, 1)))
+			Humanoid.Jump = true
+			wait(0.5)
+		end
+		
+		Humanoid.MoveToFinished:Wait()
 	end
 end
 
