@@ -72,5 +72,11 @@ end)
 
 ### addEXP
 
-[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/AddEXP.lua) shows an example of adding exp to a user when they touch a part.
-The code is the same method as mentioned as the example in [levels](https://github.com/0aoq/psychic-octo-pancake#levels).
+[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/AddEXP.lua) shows an example of adding exp to a user when they touch a part. <br>
+The code is the same method as mentioned as the example in the [levels](https://github.com/0aoq/psychic-octo-pancake#levels) module.
+
+### CharacterPos
+
+[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/CharacterPos.lua) shows how to create a character location saving system using the [PlayerData](https://github.com/0aoq/psychic-octo-pancake/blob/main/ServerScriptService/modules/PlayerData.lua) module.
+
+Whenever a player leaves the server their location is saved, once they rejoin they'll be teleported back to this location.
