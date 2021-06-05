@@ -7,9 +7,15 @@ script.Parent.Touched:Connect(function(Part)
 		if not debounce then
 			debounce = true
 			
-			module.Advance(Player)
+			module.AddEXP(Player, {
+				isMonster = true,
+				monsterLevel = 21,
+				
+				isQuest = false,
+				questLevel = nil
+			})
 			
-			wait(2)
+			wait(0.2)
 			debounce = false
 		end
 	end
