@@ -16,8 +16,15 @@ function module.init()
 				-- we need to store data inside of values and save on exit, instead of saving on change
 
 				local level = module.cache(Player, "level", 1)
-				module.cache(Player, "exp_needed", module.getEXPToNextLevel(level.Value))
-				module.cache(Player, "exp", 0)
+				local exp_needed = module.cache(Player, "exp_needed", module.getEXPToNextLevel(level.Value))
+				local exp = module.cache(Player, "exp", 0)
+				
+				game.ReplicatedStorage.LevelRemote:FireClient(Player, {
+					request = "UpdateText",
+					__level = level.Value,
+					__exp_needed = exp_needed.Value,
+					__exp = exp.Value
+				})
 			else
 				Levels:SetAsync("User__" .. Player.UserId, Http:JSONEncode(
 					{
@@ -81,19 +88,45 @@ function module.Advance(Player)
 		level.Value = level.Value + 1
 		exp_needed.Value = module.getEXPToNextLevel(level.Value)
 		exp.Value = 0
+		
+		game.ReplicatedStorage.LevelRemote:FireClient(Player, {
+			request = "UpdateText",
+			__level = level.Value,
+			__exp_needed = exp_needed.Value,
+			__exp = exp.Value
+		})
 	end
 end
 
-function module.getLevel(Player)
-	return Player:WaitForChild("level").Value
-end
+function module.AddEXP(Player, args)
+	if RunService:IsServer() then
+		local value = 100
+		
+		if args.isMonster then
+			value = math.floor(module.getMonsterEXPFromLevel(args.monsterLevel) + 0.5)
+		elseif args.isQuest then
+			value = math.floor(module.getQuestEXPFromLevel(args.questLevel) + 0.5)
+		else
+			value = math.floor(module.getQuestEXPFromLevel(1) + 0.5)
+		end
+		
+		local level = Player:FindFirstChild("level")
+		local exp_needed = Player:FindFirstChild("exp_needed")
+		local exp = Player:FindFirstChild("exp")
 
-function module.getEXP(Player)
-	return Player:WaitForChild("exp").Value
-end
-
-function module.getNeededEXP(Player)
-	return Player:WaitForChild("exp_needed").Value
+		exp.Value = exp.Value + value
+		
+		game.ReplicatedStorage.LevelRemote:FireClient(Player, {
+			request = "UpdateText",
+			__level = level.Value,
+			__exp_needed = exp_needed.Value,
+			__exp = exp.Value
+		})
+		
+		if exp.Value >= exp_needed.Value then
+			module.Advance(Player)
+		end
+	end
 end
 
 -- Level EXP
@@ -119,7 +152,7 @@ function module.getQuestEXPFromLevel(questLevel)
 end
 
 function module.getMonsterEXPFromLevel(questLevel)
-	local killsToLevel = 7 * (1 + questLevel^1.21 - questLevel^1.1)
+	local killsToLevel = 7 * (1 + questLevel^1.3 - questLevel^1.1)
 	return module.getEXPToNextLevel(questLevel) * killsToLevel^-1
 end
 
