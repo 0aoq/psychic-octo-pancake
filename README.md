@@ -66,3 +66,11 @@ end)
 
 - https://www.roblox.com/library/6910069881/KeybindModule <br>
 - [ReplicatedStorage/modules/KeybindModule.lua](https://github.com/0aoq/psychic-octo-pancake/blob/main/ReplicatedStorage/modules/KeybindModule.lua)
+
+
+## Demos
+
+### addEXP
+
+[This demo](https://github.com/0aoq/psychic-octo-pancake/blob/main/Demos/AddEXP.lua) shows an example of adding exp to a user when they touch a part.
+The code is the same method as mentioned as the example in [levels](https://github.com/0aoq/psychic-octo-pancake#levels).
