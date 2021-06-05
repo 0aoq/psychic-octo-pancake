@@ -34,7 +34,7 @@ end)
 EXP is added with the function `addEXP` which can take up to 4 arguments.
 ```lua
 module.AddEXP(Player, {
-  isMonster = true, -- if the exp adding is coming from a monster
+  isMonster = true, -- if the exp adding is coming from a monster kill
   monsterLevel = 21, -- the level of said monster affects the exp given
 				
   isQuest = false, -- if the exp adding is coming from a finished quest
