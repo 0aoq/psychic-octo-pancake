@@ -39,7 +39,7 @@ function module.applyStyles(component, style)
 		if style.boxShadowStyle == 1 then
 			boxshadow.Image = "rbxassetid://6918788732"
 			
-			if frame.Size.Y.Scale > 0.1 then
+			if frame.Size.Y.Scale > 0.15 then
 				boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
 				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
 			else -- normal box shadow doesn't look good with objects that are too small
@@ -51,7 +51,7 @@ function module.applyStyles(component, style)
 		else
 			boxshadow.Image = "rbxassetid://6916236943"
 			
-			if frame.Size.Y.Scale > 0.1 then
+			if frame.Size.Y.Scale > 0.15 then
 				boxshadow.Size = component.Size + UDim2.new(0.2, 0, 0.2, 0)
 				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
 			else -- normal box shadow doesn't look good with objects that are too small
