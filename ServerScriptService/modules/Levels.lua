@@ -92,14 +92,6 @@ game:GetService("Players").PlayerRemoving:Connect(function(PLAYER)
 	writeData(PLAYER)
 end)
 
---[[function module.cache(Player, value, default)
-	local val = Instance.new("NumberValue", Player)
-	val.Name = value
-	val.Value = Http:JSONDecode(Levels:GetAsync("User__" .. Player.UserId))[value] or default
-
-	return val
-end]]
-
 -- Level Utilities
 
 function module.Advance(Player)
