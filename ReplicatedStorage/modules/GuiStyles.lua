@@ -61,7 +61,7 @@ function module.applyStyles(component, style)
 				boxshadow.ImageTransparency = style.boxShadowAlpha or 0.5
 			end
 
-			boxshadow.Position = component.Position + UDim2.new(-0.15, 0, -0.2, 0)
+			boxshadow.Position = component.Position + UDim2.new(-0.2, 0, -0.2, 0)
 		else
 			boxshadow.Image = "rbxassetid://6916236943"
 
@@ -118,7 +118,7 @@ function module.applyStyles(component, style)
 
 			style.onunhover()
 		end
-		
+
 		wait(0.09)
 		module.currentFocus = nil
 	end)
