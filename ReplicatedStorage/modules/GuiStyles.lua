@@ -21,12 +21,13 @@ function module.applyStyles(component, style)
 	component.Position = style.pos or component.Position
 	component.Name = style.name or component.Name
 	
-	if style.sizeX and style.sizeY then
+	if style.sizeX and style.sizeY then -- set size
 		component.Size = UDim2.new(style.sizeX , 0, style.sizeY, 0)
 	end
 	
 	component.Visible = not style.hidden or not false
 	
+	-- @param {boolean} Set if the display is flex, and align items accordingly
 	if style.isFlex == true then
 		local UiListLayout = Instance.new("UIListLayout", component)
 		UiListLayout.HorizontalAlignment = Enum.HorizontalAlignment[style.alignX]
@@ -35,6 +36,7 @@ function module.applyStyles(component, style)
 		UiListLayout.Padding = UDim.new(style.flexPadding or 0, 0)
 	end
 	
+	-- @param {boolean} Apply a CSS box shadow to a gui object
 	if style.boxShadow == true then
 		local frame = Instance.new("Frame", component.Parent)
 		component.Parent = frame
@@ -80,6 +82,22 @@ function module.applyStyles(component, style)
 		boxshadow.ZIndex = component.ZIndex - 1
 		frame.ZIndex = component.ZIndex
 	end
+	
+	-- @this Handle button specific properties
+	if component:IsA("TextButton") then
+		component.MouseButton1Click:Connect(style.active or function() end)
+		component.AutoButtonColor = style.autoColor
+	end
+	
+	-- @this Handle text related properties
+	style.fontFamily = style.fontFamily or "SourceSans"
+	if component:IsA("TextLabel") or component:IsA("TextButton") then
+		component.RichText = style.rich or component.RichText
+		component.Text = style.content or component.Text
+		component.TextScaled = style.scaledText or component.TextScaled
+		component.TextColor3 = style.color or component.TextColor3
+		component.Font = Enum.Font[style.fontFamily]
+	end
 		
 	-- Events
 
@@ -105,20 +123,6 @@ function module.applyStyles(component, style)
 		module.currentFocus = nil
 	end)
 	
-	if component:IsA("TextButton") then
-		component.MouseButton1Click:Connect(style.active or function() end)
-		component.AutoButtonColor = style.autoColor
-	end
-	
-	style.fontFamily = style.fontFamily or "SourceSans"
-	if component:IsA("TextLabel") or component:IsA("TextButton") then
-		component.RichText = style.rich or component.RichText
-		component.Text = style.content or component.Text
-		component.TextScaled = style.scaledText or component.TextScaled
-		component.TextColor3 = style.color or component.TextColor3
-		component.Font = Enum.Font[style.fontFamily]
-	end
-	
 	if style.run then
 		coroutine.wrap(style.run)(Instance.new("LocalScript", component))
 	end
@@ -136,6 +140,7 @@ function module.render(container, styles)
 	end
 end
 
+-- @function Returns a table of all elements that match a className
 function module.getElementsByClassName(container, className)
 	local elements = {}
 	
@@ -148,10 +153,12 @@ function module.getElementsByClassName(container, className)
 	return elements
 end
 
+-- @function @deprecated Apply a new style to the stylesheet ! Use nthChild or getElementsByClassName instead.
 function module.style(styles, style, new)
 	styles[style] = new
 end
 
+-- @function Get the element that is the specific number in the list
 function module.nthChild(container, className, x, style)
 	for i,v in pairs(module.getElementsByClassName(container, className)) do
 		if i == x then
