@@ -45,7 +45,7 @@ function module.applyStyles(component, style)
 		
 		style.boxShadowStyle = style.boxShadowStyle or 1
 		if style.boxShadowStyle == 1 then
-			boxshadow.Image = "rbxassetid://6918788732"
+			boxshadow.Image = "rbxassetid://6918974619"
 			
 			if frame.Size.Y.Scale > 0.15 then
 				boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
