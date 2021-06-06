@@ -2,8 +2,6 @@ local wait = require(game.ReplicatedStorage.modules.wait)
 
 local module = {}
 
-module.currentFocus = nil
-
 function module.applyStyles(component, style)
 	-- Styles
 
@@ -101,30 +99,28 @@ function module.applyStyles(component, style)
 
 	-- Events
 
-	component.MouseEnter:Connect(function()
-		if style.onhover then
-			module.currentFocus = component
+	if style.onhover then
+		component.MouseEnter:Connect(function()
+			coroutine.wrap(style.onhover)(component)
+		end)
+	end
 
-			if module.currentFocus == nil then module.currentFocus = component return end
+	if style.onunhover then
+		component.MouseLeave:Connect(function()
+			coroutine.wrap(style.onunhover)(component)
+		end)
+	end
 
-			wait(0.09)
-			style.onhover()
+	if style.active then
+		if component:IsA("TextButton") then
+			component.MouseButton1Click:Connect(function()
+				coroutine.wrap(style.active)(component, style)
+			end)
 		end
-	end)
-
-	component.MouseLeave:Connect(function()
-		if style.onunhover then
-			if module.currentFocus == nil then module.currentFocus = component return end
-
-			style.onunhover()
-		end
-
-		wait(0.09)
-		module.currentFocus = nil
-	end)
+	end
 
 	if style.run then
-		coroutine.wrap(style.run)(Instance.new("LocalScript", component))
+		coroutine.wrap(style.run)(Instance.new("LocalScript", component), component)
 	end
 end
 
