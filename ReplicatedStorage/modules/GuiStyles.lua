@@ -2,6 +2,14 @@ local module = {}
 
 function module.applyStyles(component, style)
 	-- Styles
+	
+	if style.background == "rebeccapurple" then
+		style.background = Color3.fromRGB(102, 51, 153)
+	end
+	
+	if style.color == "rebeccapurple" then
+		style.color = Color3.fromRGB(102, 51, 153)
+	end
 
 	Instance.new("UICorner", component).CornerRadius = UDim.new(style.borderRadius or 0, 0)
 	component.BackgroundColor3 = style.background or component.BackgroundColor3
