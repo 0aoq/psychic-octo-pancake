@@ -34,17 +34,33 @@ function module.applyStyles(component, style)
 		component.Position = UDim2.new(0, 0, 0, 0)
 		
 		local boxshadow = Instance.new("ImageLabel", frame)
-		boxshadow.Image = "rbxassetid://6918788732"
 		
-		if frame.Size.Y.Scale > 0.1 then
-			boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
-			boxshadow.ImageTransparency = style.boxShadowAlpha or 0
-		else -- normal box shadow doesn't look good with objects that are too small
-			boxshadow.Size = component.Size + UDim2.new(0.4, 0, 0.5, 0)
-			boxshadow.ImageTransparency = style.boxShadowAlpha or 0.5
+		style.boxShadowStyle = style.boxShadowStyle or 1
+		if style.boxShadowStyle == 1 then
+			boxshadow.Image = "rbxassetid://6918788732"
+			
+			if frame.Size.Y.Scale > 0.1 then
+				boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
+				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
+			else -- normal box shadow doesn't look good with objects that are too small
+				boxshadow.Size = component.Size + UDim2.new(0.4, 0, 0.5, 0)
+				boxshadow.ImageTransparency = style.boxShadowAlpha or 0.5
+			end
+
+			boxshadow.Position = component.Position + UDim2.new(-0.2, 0, -0.2, 0)
+		else
+			boxshadow.Image = "rbxassetid://6916236943"
+			
+			if frame.Size.Y.Scale > 0.1 then
+				boxshadow.Size = component.Size + UDim2.new(0.2, 0, 0.2, 0)
+				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
+			else -- normal box shadow doesn't look good with objects that are too small
+				boxshadow.Size = component.Size + UDim2.new(0.2, 0, 0.3, 0)
+				boxshadow.ImageTransparency = style.boxShadowAlpha or 0.65
+			end
+
+			boxshadow.Position = component.Position + UDim2.new(-0.1, 0, -0.1, 0)
 		end
-		
-		boxshadow.Position = component.Position + UDim2.new(-0.2, 0, -0.2, 0)
 		
 		boxshadow.Name = "BoxShadow"
 		boxshadow.BackgroundTransparency = 1
