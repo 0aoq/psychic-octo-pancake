@@ -22,16 +22,47 @@ function module.applyStyles(component, style)
 		UiListLayout.SortOrder = Enum.SortOrder[style.flexOrder]
 		UiListLayout.Padding = UDim.new(style.flexPadding or 0, 0)
 	end
+	
+	if style.boxShadow == true then
+		local frame = Instance.new("Frame", component.Parent)
+		component.Parent = frame
+		frame.Name = component.Name
+		frame.Size = component.Size
+		frame.Position = component.Position
+		frame.BackgroundTransparency = 1
+		component.Size = UDim2.new(1, 0, 1, 0)
+		component.Position = UDim2.new(0, 0, 0, 0)
+		
+		local boxshadow = Instance.new("ImageLabel", frame)
+		boxshadow.Image = "rbxassetid://6918788732"
+		
+		if frame.Size.Y.Scale > 0.1 then
+			boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
+			boxshadow.ImageTransparency = style.boxShadowAlpha or 0
+		else -- normal box shadow doesn't look good with objects that are too small
+			boxshadow.Size = component.Size + UDim2.new(0.4, 0, 0.5, 0)
+			boxshadow.ImageTransparency = style.boxShadowAlpha or 0.5
+		end
+		
+		boxshadow.Position = component.Position + UDim2.new(-0.2, 0, -0.2, 0)
+		
+		boxshadow.Name = "BoxShadow"
+		boxshadow.BackgroundTransparency = 1
+		boxshadow.ZIndex = 1
+		component.ZIndex = 2
+	end
 		
 	-- Events
 
 	component.MouseEnter:Connect(style.onhover or function() end)
 	component.MouseLeave:Connect(style.onunhover or function() end)
-
+	
 	if component:IsA("TextButton") then
 		component.MouseButton1Click:Connect(style.active or function() end)
+		component.AutoButtonColor = style.autoColor
 	end
-
+	
+	style.fontFamily = style.fontFamily or "SourceSans"
 	if component:IsA("TextLabel") or component:IsA("TextButton") then
 		component.RichText = style.rich or component.RichText
 		component.Text = style.content or component.Text
