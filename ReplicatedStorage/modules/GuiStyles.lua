@@ -6,11 +6,11 @@ module.currentFocus = nil
 
 function module.applyStyles(component, style)
 	-- Styles
-	
+
 	if style.background == "rebeccapurple" then
 		style.background = Color3.fromRGB(102, 51, 153)
 	end
-	
+
 	if style.color == "rebeccapurple" then
 		style.color = Color3.fromRGB(102, 51, 153)
 	end
@@ -20,13 +20,13 @@ function module.applyStyles(component, style)
 	component.BackgroundTransparency = style.alpha or component.BackgroundTransparency
 	component.Position = style.pos or component.Position
 	component.Name = style.name or component.Name
-	
+
 	if style.sizeX and style.sizeY then -- set size
 		component.Size = UDim2.new(style.sizeX , 0, style.sizeY, 0)
 	end
-	
+
 	component.Visible = not style.hidden or not false
-	
+
 	-- @param {boolean} Set if the display is flex, and align items accordingly
 	if style.isFlex == true then
 		local UiListLayout = Instance.new("UIListLayout", component)
@@ -35,7 +35,7 @@ function module.applyStyles(component, style)
 		UiListLayout.SortOrder = Enum.SortOrder[style.flexOrder]
 		UiListLayout.Padding = UDim.new(style.flexPadding or 0, 0)
 	end
-	
+
 	-- @param {boolean} Apply a CSS box shadow to a gui object
 	if style.boxShadow == true then
 		local frame = Instance.new("Frame", component.Parent)
@@ -46,13 +46,13 @@ function module.applyStyles(component, style)
 		frame.BackgroundTransparency = 1
 		component.Size = UDim2.new(1, 0, 1, 0)
 		component.Position = UDim2.new(0, 0, 0, 0)
-		
+
 		local boxshadow = Instance.new("ImageLabel", frame)
-		
+
 		style.boxShadowStyle = style.boxShadowStyle or 1
 		if style.boxShadowStyle == 1 then
 			boxshadow.Image = "rbxassetid://6919135242"
-			
+
 			if frame.Size.Y.Scale > 0.15 then
 				boxshadow.Size = component.Size + UDim2.new(0.3, 0, 0.4, 0)
 				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
@@ -64,7 +64,7 @@ function module.applyStyles(component, style)
 			boxshadow.Position = component.Position + UDim2.new(-0.15, 0, -0.2, 0)
 		else
 			boxshadow.Image = "rbxassetid://6916236943"
-			
+
 			if frame.Size.Y.Scale > 0.15 then
 				boxshadow.Size = component.Size + UDim2.new(0.2, 0, 0.2, 0)
 				boxshadow.ImageTransparency = style.boxShadowAlpha or 0
@@ -75,20 +75,20 @@ function module.applyStyles(component, style)
 
 			boxshadow.Position = component.Position + UDim2.new(-0.1, 0, -0.1, 0)
 		end
-		
+
 		boxshadow.Name = "BoxShadow"
 		boxshadow.BackgroundTransparency = 1
 		component.ZIndex = component.ZIndex + 1
 		boxshadow.ZIndex = component.ZIndex - 1
 		frame.ZIndex = component.ZIndex
 	end
-	
+
 	-- @this Handle button specific properties
 	if component:IsA("TextButton") then
 		component.MouseButton1Click:Connect(style.active or function() end)
 		component.AutoButtonColor = style.autoColor
 	end
-	
+
 	-- @this Handle text related properties
 	style.fontFamily = style.fontFamily or "SourceSans"
 	if component:IsA("TextLabel") or component:IsA("TextButton") then
@@ -98,31 +98,31 @@ function module.applyStyles(component, style)
 		component.TextColor3 = style.color or component.TextColor3
 		component.Font = Enum.Font[style.fontFamily]
 	end
-		
+
 	-- Events
 
 	component.MouseEnter:Connect(function()
-		module.currentFocus = component
-		
-		if module.currentFocus == nil then module.applyStyles(component, style) return end
-		
-		wait(0.09)
 		if style.onhover then
+			module.currentFocus = component
+
+			if module.currentFocus == nil then module.currentFocus = component return end
+
+			wait(0.09)
 			style.onhover()
 		end
 	end)
-	
+
 	component.MouseLeave:Connect(function()
-		if module.currentFocus == nil then module.applyStyles(component, style) return end
-		
 		if style.onunhover then
+			if module.currentFocus == nil then module.currentFocus = component return end
+
 			style.onunhover()
 		end
 		
 		wait(0.09)
 		module.currentFocus = nil
 	end)
-	
+
 	if style.run then
 		coroutine.wrap(style.run)(Instance.new("LocalScript", component))
 	end
@@ -143,13 +143,13 @@ end
 -- @function Returns a table of all elements that match a className
 function module.getElementsByClassName(container, className)
 	local elements = {}
-	
+
 	for _,component in pairs(container:GetDescendants()) do
 		if component:GetAttribute("class") == className then
 			table.insert(elements, 0, component)
 		end
 	end
-	
+
 	return elements
 end
 
@@ -163,6 +163,7 @@ function module.nthChild(container, className, x, style)
 	for i,v in pairs(module.getElementsByClassName(container, className)) do
 		if i == x then
 			module.applyStyles(v, style)
+			v:SetAttribute("class", v:GetAttribute("class") .. i)
 		end
 	end
 end
